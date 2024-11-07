@@ -1,63 +1,75 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QPushButton, QVBoxLayout, QWidget
-from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QStackedWidget, QWidget, QVBoxLayout, QLabel
 
-class MyApp(QWidget):
+
+class MyCustomWidget(QWidget):
+    """Представляет собой пользовательский виджет"""
+
+    def __init__(self, title):
+        super().__init__()
+        layout = QVBoxLayout()
+        label = QLabel(title)
+        layout.addWidget(label)
+        self.setLayout(layout)
+
+
+class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.initUI()
-        self.mouse_button_pressed = None  # Переменная для хранения нажатой кнопки мыши
 
-    def initUI(self):
-        layout = QVBoxLayout()
-
-        # Создаем 4 кнопки
-        self.button1 = QPushButton("Кнопка 1")
-        self.button2 = QPushButton("Кнопка 2")
-        self.button3 = QPushButton("Кнопка 3")
-        self.button4 = QPushButton("Кнопка 4")
-
-        # Подключаем обработчик нажатий к каждой кнопке
-        self.button1.clicked.connect(self.button_clicked)
-        self.button2.clicked.connect(self.button_clicked)
-        self.button3.clicked.connect(self.button_clicked)
-        self.button4.clicked.connect(self.button_clicked)
-
-        # Добавляем кнопки в layout
-        layout.addWidget(self.button1)
-        layout.addWidget(self.button2)
-        layout.addWidget(self.button3)
-        layout.addWidget(self.button4)
-
-        self.setLayout(layout)
-        self.setWindowTitle("Обработка нажатий кнопок")
+        self.setWindowTitle("Приложение на PyQt6")
         self.setGeometry(100, 100, 300, 200)
-        self.show()
 
-    def mousePressEvent(self, event):
-        if event.button() == Qt.MouseButton.LeftButton:
-            self.mouse_button_pressed = "левая"
-        elif event.button() == Qt.MouseButton.RightButton:
-            self.mouse_button_pressed = "правая"
-        elif event.button() == Qt.MouseButton.MiddleButton:
-            self.mouse_button_pressed = "средняя"
-        else:
-            self.mouse_button_pressed = None
+        self.stacked_widget = QStackedWidget()
 
-    def button_clicked(self):
-        # Узнаем, какая кнопка была нажата
-        sender = self.sender()  # Получаем объект кнопки
-        button_name = sender.text()
+        # Добавляем первый виджет
+        self.window1 = self.create_custom_widget("Это первое окно")
+        self.stacked_widget.addWidget(self.window1)
 
-        # Используем информацию о нажатой кнопке мыши
-        button_pressed = self.mouse_button_pressed if self.mouse_button_pressed else "неизвестная"
+        # Добавляем второй виджет
+        self.window2 = self.create_custom_widget("Это второе окно")
+        self.stacked_widget.addWidget(self.window2)
 
-        # Выводим результат
-        print(f"{button_name} была нажата с {button_pressed} кнопкой мыши.")
+        # Устанавливаем QStackedWidget как центральный виджет
+        self.setCentralWidget(self.stacked_widget)
+
+        self.init_ui()
+
+    def create_custom_widget(self, title):
+        """Создает экземпляр MyCustomWidget с заданным заголовком"""
+        return MyCustomWidget(title)
+
+    def init_ui(self):
+        """Инициализирует пользовательский интерфейс"""
+        # Добавление кнопок для переключения между окнами
+        button1 = QPushButton("Переключиться на первое окно")
+        button1.clicked.connect(self.show_window1)
+
+        button2 = QPushButton("Переключиться на второе окно")
+        button2.clicked.connect(self.show_window2)
+
+        # Помещаем кнопки в главное окно
+        layout = QVBoxLayout()
+        layout.addWidget(button1)
+        layout.addWidget(button2)
+        layout.addWidget(self.stacked_widget)
+
+        # Устанавливаем основной виджет
+        central_widget = QWidget()
+        central_widget.setLayout(layout)
+        self.setCentralWidget(central_widget)
+
+    def show_window1(self):
+        """Показать первое окно"""
+        self.stacked_widget.setCurrentIndex(0)
+
+    def show_window2(self):
+        """Показать второе окно"""
+        self.stacked_widget.setCurrentIndex(1)
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = QApplication(sys.argv)
-    ex = MyApp()
+    mainWin = MainWindow()
+    mainWin.show()
     sys.exit(app.exec())
