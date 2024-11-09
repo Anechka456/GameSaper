@@ -13,7 +13,7 @@ template_lvl = """<?xml version="1.0" encoding="UTF-8"?>
     <x>0</x>
     <y>0</y>
     <width>1089</width>
-    <height>674</height>
+    <height>876</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@ template_lvl = """<?xml version="1.0" encoding="UTF-8"?>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>320</y>
+     <y>310</y>
      <width>271</width>
      <height>41</height>
     </rect>
@@ -170,9 +170,9 @@ background-color: rgb(139, 103, 103);</string>
   <widget class="QPushButton" name="exit">
    <property name="geometry">
     <rect>
-     <x>940</x>
+     <x>910</x>
      <y>20</y>
-     <width>131</width>
+     <width>171</width>
      <height>41</height>
     </rect>
    </property>
@@ -183,6 +183,42 @@ background-color: rgb(139, 103, 103);</string>
    </property>
    <property name="text">
     <string>Назад</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="lvl4">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>80</y>
+     <width>241</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(93, 0, 1);
+font: 16pt &quot;MS Shell Dlg 2&quot;;
+background-color: rgb(139, 103, 103);</string>
+   </property>
+   <property name="text">
+    <string>4 LVL</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="time_lvl4">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>370</y>
+     <width>241</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(93, 0, 1);
+font: 16pt &quot;MS Shell Dlg 2&quot;;
+background-color: rgb(139, 103, 103);</string>
+   </property>
+   <property name="text">
+    <string>Time attack LVL 4</string>
    </property>
   </widget>
  </widget>
@@ -198,7 +234,19 @@ class Lvl(QWidget):
         f = io.StringIO(template_lvl)
         uic.loadUi(f, self)  # Загружаем дизайн
 
-    def back_button(self):
+    def level_1(self):
+        return self.lvl1
+
+    def level_2(self):
+        return self.lvl2
+
+    def level_3(self):
+        return self.lvl3
+
+    def level_4(self):
+        return self.lvl4
+
+    def exit_button(self):
         return self.exit
 
 

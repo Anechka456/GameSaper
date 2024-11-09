@@ -1,11 +1,12 @@
 import sys
-import io
-from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QStackedWidget, QWidget, QVBoxLayout, QLabel
 
-from saper import Saper, template_saper
-from lvl import Lvl, template_lvl
-from menu import Menu, template_menu
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget
+
+from saper import Saper
+from setting import Setting
+from lvl import Lvl
+from menu import Menu
 
 
 class MainWindow(QMainWindow):
@@ -14,22 +15,30 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("Приложение на PyQt6")
         self.setGeometry(100, 100, 1089, 876)  # x, y, width, height
+        self.setWindowTitle('Сапёр')
+        self.setWindowIcon(QIcon("Img/ikonka_saper.png"))
 
         # Создаем виджет для переключения между окнами
         self.stacked_widget = QStackedWidget()
 
-        # Создаем два окна
+        # Создаем окна
         self.menu = self.create_window1()
-        # self.setting = self.create_window2() в разработке
+        self.setting = self.create_window2()
         self.lvl = self.create_window3()
-        # self.saper = self.create_window4() в разработке
+        self.saper_lvl1 = self.create_window4((8, 8), '1')
+        self.saper_lvl2 = self.create_window4((10, 10), '2')
+        self.saper_lvl3 = self.create_window4((10, 15), '3')
+        self.saper_lvl4 = self.create_window4((15, 15), '4')
         # self.time_saper = self.create_window5() в разработке
 
         # Добавляем окна в QStackedWidget
         self.stacked_widget.addWidget(self.menu)
-        # self.stacked_widget.addWidget(self.setting)
+        self.stacked_widget.addWidget(self.setting)
         self.stacked_widget.addWidget(self.lvl)
-        # self.stacked_widget.addWidget(self.saper)
+        self.stacked_widget.addWidget(self.saper_lvl1)
+        self.stacked_widget.addWidget(self.saper_lvl2)
+        self.stacked_widget.addWidget(self.saper_lvl3)
+        self.stacked_widget.addWidget(self.saper_lvl4)
         # self.stacked_widget.addWidget(self.time_saper)
 
         # Устанавливаем QStackedWidget как центральный виджет
@@ -39,49 +48,51 @@ class MainWindow(QMainWindow):
         """Создание окна меню"""
         self.menu = Menu()
 
-        level_selection_button = self.menu.login_button()
-        level_selection_button.clicked.connect(self.show_window3)  # Переключаем на окно выбор уровня при нажатии
+        level_selection_button = self.menu.level_button()
+        level_selection_button.clicked.connect(self.show_window3)
+
+        settings_button = self.menu.setting_button()
+        settings_button.clicked.connect(self.show_window2)
 
         return self.menu
 
-    # def create_window2(self):
-    #     """Создание окна настроек"""
-    #     widget = QWidget()
-    #     layout = QVBoxLayout()
-    #
-    #     label = QLabel("Это 1второе окно")
-    #     button = QPushButton("Вернуться назад")
-    #     button.clicked.connect(self.show_window1)  # Переключаем на первое окно при нажатии
-    #
-    #     layout.addWidget(label)
-    #     layout.addWidget(button)
-    #     widget.setLayout(layout)
-    #
-    #     return widget
+    def create_window2(self):
+        """Создание окна настроек"""
+        self.setting = Setting()
+
+        back_button = self.setting.exit_button()
+        back_button.clicked.connect(self.show_window1)
+
+        return self.setting
 
     def create_window3(self):
         """Создание окна выбора уровня"""
         self.lvl = Lvl()
 
-        back_button = self.lvl.back_button()
-        back_button.clicked.connect(self.show_window1)  # Переключаем на первое окно при нажатии
+        back_button = self.lvl.exit_button()
+        back_button.clicked.connect(self.show_window1)
+
+        button_level_1 = self.lvl.level_1()
+        button_level_1.clicked.connect(self.show_window4)
+
+        button_level_2 = self.lvl.level_2()
+        button_level_2.clicked.connect(self.show_window5)
+
+        button_level_3 = self.lvl.level_3()
+        button_level_3.clicked.connect(self.show_window6)
+
+        button_level_4 = self.lvl.level_4()
+        button_level_4.clicked.connect(self.show_window7)
 
         return self.lvl
 
-    # def create_window4(self):
-    #     """Создание второго окна"""
-    #     widget = QWidget()
-    #     layout = QVBoxLayout()
-    #
-    #     label = QLabel("Это 2второе окно")
-    #     button = QPushButton("Вернуться назад")
-    #     button.clicked.connect(self.show_window1)  # Переключаем на первое окно при нажатии
-    #
-    #     layout.addWidget(label)
-    #     layout.addWidget(button)
-    #     widget.setLayout(layout)
-    #
-    #     return widget
+    def create_window4(self, size, lvl):
+        """Создание окна игры сапер"""
+        self.saper = Saper(size[0], size[1], lvl)
+
+        back_button = self.saper.exit_button()
+        back_button.clicked.connect(self.show_window3)
+        return self.saper
 
     def show_window1(self):
         """Показать первое окно"""
@@ -93,7 +104,23 @@ class MainWindow(QMainWindow):
 
     def show_window3(self):
         """Показать окно выбора уровня"""
-        self.stacked_widget.setCurrentIndex(1)
+        self.stacked_widget.setCurrentIndex(2)
+
+    def show_window4(self):
+        """Показать окно 1 уровня"""
+        self.stacked_widget.setCurrentIndex(3)
+
+    def show_window5(self):
+        """Показать окно 2 уровня"""
+        self.stacked_widget.setCurrentIndex(4)
+
+    def show_window6(self):
+        """Показать окно 3 уровня"""
+        self.stacked_widget.setCurrentIndex(5)
+
+    def show_window7(self):
+        """Показать окно 3 уровня"""
+        self.stacked_widget.setCurrentIndex(6)
 
 
 if __name__ == "__main__":

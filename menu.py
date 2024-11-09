@@ -12,8 +12,8 @@ template_menu = """<?xml version="1.0" encoding="UTF-8"?>
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1041</width>
-    <height>810</height>
+    <width>1089</width>
+    <height>876</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,14 +22,14 @@ template_menu = """<?xml version="1.0" encoding="UTF-8"?>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>190</x>
      <y>190</y>
      <width>671</width>
      <height>191</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(125, 0, 0);
+    <string notr="true">color: rgb(170, 0, 0);
 font: 36pt &quot;MS Shell Dlg 2&quot;;</string>
    </property>
    <property name="text">
@@ -42,7 +42,7 @@ font: 36pt &quot;MS Shell Dlg 2&quot;;</string>
   <widget class="QPushButton" name="setting">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>280</x>
      <y>450</y>
      <width>501</width>
      <height>81</height>
@@ -51,7 +51,7 @@ font: 36pt &quot;MS Shell Dlg 2&quot;;</string>
    <property name="styleSheet">
     <string notr="true">color: rgb(74, 18, 11);
 background-color: rgb(156, 138, 138);
-font: 18pt &quot;MS Shell Dlg 2&quot;;</string>
+font: 18pt &quot;MS UI Gothic&quot;;</string>
    </property>
    <property name="text">
     <string>Настройки</string>
@@ -60,16 +60,16 @@ font: 18pt &quot;MS Shell Dlg 2&quot;;</string>
   <widget class="QPushButton" name="lvl">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>280</x>
      <y>360</y>
      <width>501</width>
      <height>81</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(116, 48, 31);
+    <string notr="true">color: rgb(118, 0, 0);
 background-color: rgb(156, 138, 138);
-font: 24pt &quot;MS Shell Dlg 2&quot;;
+font: 24pt &quot;MS UI Gothic&quot;;
   
 </string>
    </property>
@@ -90,8 +90,11 @@ class Menu(QWidget):
         f = io.StringIO(template_menu)
         uic.loadUi(f, self)  # Загружаем дизайн
 
-    def login_button(self):
+    def level_button(self):
         return self.lvl
+
+    def setting_button(self):
+        return self.setting
 
 
 if __name__ == '__main__':
