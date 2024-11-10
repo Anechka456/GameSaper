@@ -58,7 +58,7 @@ class MainWindow(QMainWindow):
 
     def create_window2(self):
         """Создание окна настроек"""
-        self.setting = Setting()
+        self.setting = Setting(self)
 
         back_button = self.setting.exit_button()
         back_button.clicked.connect(self.show_window1)
@@ -123,8 +123,13 @@ class MainWindow(QMainWindow):
         self.stacked_widget.setCurrentIndex(6)
 
 
+def except_hook(cls, exception, traceback):
+    sys.__excepthook__(cls, exception, traceback)
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     mainWin = MainWindow()
     mainWin.show()
+    sys.excepthook = except_hook
     sys.exit(app.exec())

@@ -1,129 +1,70 @@
-import io
+import sqlite3
 import sys
 
-from PyQt6 import uic  # Импортируем uic
-from PyQt6.QtWidgets import QApplication, QWidget
-
-template_setting = """<?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>1089</width>
-    <height>876</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>50</y>
-     <width>651</width>
-     <height>111</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 36pt &quot;Ebrima&quot;;
-color: rgb(170, 0, 0)</string>
-   </property>
-   <property name="text">
-    <string>Настройки</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="dus">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>430</y>
-     <width>201</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 24pt &quot;MS UI Gothic&quot;;
-color: rgb(170, 0, 0);
-background-color: rgb(157, 125, 125);</string>
-   </property>
-   <property name="text">
-    <string>Лес</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="mountains">
-   <property name="geometry">
-    <rect>
-     <x>430</x>
-     <y>430</y>
-     <width>201</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 24pt &quot;MS UI Gothic&quot;;
-color: rgb(170, 0, 0);
-background-color: rgb(157, 125, 125);</string>
-   </property>
-   <property name="text">
-    <string>Горы</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="space">
-   <property name="geometry">
-    <rect>
-     <x>770</x>
-     <y>430</y>
-     <width>201</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 24pt &quot;MS UI Gothic&quot;;
-color: rgb(170, 0, 0);
-background-color: rgb(157, 125, 125);
-</string>
-   </property>
-   <property name="text">
-    <string>Космос</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="exit">
-   <property name="geometry">
-    <rect>
-     <x>900</x>
-     <y>20</y>
-     <width>161</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(170, 0, 0);
-background-color: rgb(157, 125, 125);</string>
-   </property>
-   <property name="text">
-    <string>Назад</string>
-   </property>
-  </widget>
- </widget>
- <resources/>
- <connections/>
-</ui>
-"""
+from PyQt6 import uic
+from PyQt6.QtGui import QPixmap, QBrush, QPalette
+from PyQt6.QtWidgets import QApplication, QWidget, QLabel
 
 
 class Setting(QWidget):
-    def __init__(self):
+    def __init__(self, windows):
         super().__init__()
-        f = io.StringIO(template_setting)
-        uic.loadUi(f, self)  # Загружаем дизайн
+        self.windows = windows
+        uic.loadUi("QT_files/untitled_setting.ui", self)  # Загружаем дизайн
+        self.initUI()
+
+    def initUI(self):
+        self.pixmap_forest = QPixmap('Img/forest.png')
+        self.image_forest = QLabel(self)
+        self.pixmap_forest = self.pixmap_forest.scaledToWidth(231)
+        self.pixmap_forest = self.pixmap_forest.scaledToHeight(171)
+        self.image_forest.move(100, 240)
+        self.image_forest.resize(231, 171)
+        self.image_forest.setPixmap(self.pixmap_forest)
+
+        self.pixmap_mountains = QPixmap('Img/mountains.jpg')
+        self.image_mountains = QLabel(self)
+        self.pixmap_mountains = self.pixmap_mountains.scaledToWidth(231)
+        self.pixmap_mountains = self.pixmap_mountains.scaledToHeight(171)
+        self.image_mountains.move(420, 240)
+        self.image_mountains.resize(231, 171)
+        self.image_mountains.setPixmap(self.pixmap_mountains)
+
+        self.pixmap_space = QPixmap('Img/space.jpg')
+        self.image_space = QLabel(self)
+        self.pixmap_space = self.pixmap_space.scaledToWidth(231)
+        self.pixmap_space = self.pixmap_space.scaledToHeight(171)
+        self.image_space.move(740, 240)
+        self.image_space.resize(231, 171)
+        self.image_space.setPixmap(self.pixmap_space)
+
+        self.forest.clicked.connect(self.change_background_forest)
+        self.mountains.clicked.connect(self.change_background_mountains)
+        self.space.clicked.connect(self.change_background_space)
+
+    def change_background_forest(self):
+        # Установка фона с изображением леса
+        pixmap = QPixmap("Img/forest.png")
+        pixmap = pixmap.scaled(self.size())
+        palette = QPalette()
+        palette.setBrush(QPalette.ColorRole.Window, QBrush(pixmap))
+        self.windows.setPalette(palette)
+
+    def change_background_mountains(self):
+        # Установка фона с изображением гор
+        pixmap = QPixmap("Img/mountains.jpg")
+        pixmap = pixmap.scaled(self.size())
+        palette = QPalette()
+        palette.setBrush(QPalette.ColorRole.Window, QBrush(pixmap))
+        self.windows.setPalette(palette)
+
+    def change_background_space(self):
+        # Установка фона с изображением космоса
+        pixmap = QPixmap("Img/space.jpg")
+        pixmap = pixmap.scaled(self.size())
+        palette = QPalette()
+        palette.setBrush(QPalette.ColorRole.Window, QBrush(pixmap))
+        self.windows.setPalette(palette)
 
     def exit_button(self):
         return self.exit
@@ -132,9 +73,33 @@ class Setting(QWidget):
         return self.setting
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Setting()
-    ex.show()
-    sys.exit(app.exec())
+# def create_database():
+#     conn = sqlite3.connect('images.db')
+#     cursor = conn.cursor()
+#
+#     cursor.execute('''
+#         CREATE TABLE IF NOT EXISTS Images (
+#             id INTEGER PRIMARY KEY AUTOINCREMENT,
+#             image BLOB NOT NULL
+#         )
+#     ''')
+#
+#     with open("Img/forest.png", "rb") as file:
+#         image_data = file.read()
+#
+#     cursor.execute('INSERT INTO Images (image) VALUES (?)', (image_data,))
+#     conn.commit()
+#     conn.close()
+#
+#
+# def get_image_from_db():
+#     conn = sqlite3.connect('images.db')
+#     cursor = conn.cursor()
+#
+#     cursor.execute('SELECT image FROM Images WHERE id=1')
+#     image_data = cursor.fetchone()[0]
+#     conn.close()
+#
+#     return QByteArray(image_data)
+
 
