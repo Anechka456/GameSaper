@@ -1,4 +1,3 @@
-import io
 import sys
 
 import random
@@ -6,167 +5,7 @@ import copy
 
 from PyQt6 import uic
 from PyQt6.QtCore import Qt, QTimer
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QButtonGroup, QMessageBox
-
-
-template_saper = """<?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>1089</width>
-    <height>876</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
-  <widget class="QLabel" name="lvl_field">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>331</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(106, 0, 0);</string>
-   </property>
-   <property name="text">
-    <string>Уровень:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="size_field_label">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>60</y>
-     <width>271</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(106, 0, 0);</string>
-   </property>
-   <property name="text">
-    <string>Размер поля:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>110</y>
-     <width>91</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(106, 0, 0);</string>
-   </property>
-   <property name="text">
-    <string>Прогресс:</string>
-   </property>
-  </widget>
-  <widget class="QProgressBar" name="progres_field">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>120</y>
-     <width>351</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="value">
-    <number>0</number>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="exit">
-   <property name="geometry">
-    <rect>
-     <x>930</x>
-     <y>20</y>
-     <width>141</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(125, 0, 0);
-background-color: rgb(170, 114, 114);</string>
-   </property>
-   <property name="text">
-    <string>Выход</string>
-   </property>
-  </widget>
-  <widget class="QLCDNumber" name="time_field">
-   <property name="geometry">
-    <rect>
-     <x>291</x>
-     <y>181</y>
-     <width>71</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(202, 0, 0);
-font: 16pt &quot;MS Shell Dlg 2&quot;;</string>
-   </property>
-  </widget>
-  <widget class="QLCDNumber" name="bomb_field">
-   <property name="geometry">
-    <rect>
-     <x>780</x>
-     <y>180</y>
-     <width>71</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(202, 0, 0);</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="new_game">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>550</x>
-     <y>170</y>
-     <width>51</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Смайлик</string>
-   </property>
-  </widget>
-  <widget class="QWidget" name="gridLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>230</y>
-     <width>561</width>
-     <height>621</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" name="gridLayout"/>
-  </widget>
- </widget>
- <resources/>
- <connections/>
-</ui>
-"""
+from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QButtonGroup, QMessageBox
 
 
 class Saper(QWidget):
@@ -175,8 +14,7 @@ class Saper(QWidget):
         self.size_row = size_row
         self.size_col = size_col
         self.lvl = lvl
-        f = io.StringIO(template_saper)
-        uic.loadUi(f, self)  # Загружаем дизайн
+        uic.loadUi("QT_files/untitled_field.ui", self)  # Загружаем дизайн
         self.initUI()
 
     def initUI(self):
@@ -193,6 +31,11 @@ class Saper(QWidget):
             for j in range(len(self.secondary_field[i])):
                 self.possible_bombs.append((i, j))
 
+        # кол-во бомб
+        self.number_bombs = int(self.size_field[0] * self.size_field[1] * 0.2)
+        # кол-во закрытых клеток не учитывая бомбы
+        self.all_number_cells = self.size_x * self.size_y - self.number_bombs
+
         self.field_creation_flag = True  # флаг, нужно создовать новое поле или нет
 
         self.game_active = True
@@ -200,7 +43,6 @@ class Saper(QWidget):
         self.button_coordinates = []
 
         self.number_open_cells = 0  # кол-во открытых клеток
-        self.all_number_cells = 0  # кол-во закрытых клеток не учитывая бомбы
 
         self.field_group = QButtonGroup()
 
@@ -209,12 +51,13 @@ class Saper(QWidget):
         self.timer.timeout.connect(self.update_time)
         self.current_time = 0
 
-        # отоброжаем поле
+        # отображаем поле
         self.gridLayout.setHorizontalSpacing(self.size_field[0])
         self.gridLayout.setVerticalSpacing(self.size_field[1])
         self.gridLayout.setSpacing(0)  # Промежутки между кнопками
         self.gridLayout.setContentsMargins(0, 0, 0, 0)  # Отступы вокруг сетки
 
+        # расставляем кнопки
         x, y = 0, 0
         for i in range(self.size_field[0]):
             row_button_coordinates = []
@@ -239,8 +82,8 @@ class Saper(QWidget):
 
         self.new_game.clicked.connect(self.func_new_game)
 
-        # отоброжаем уровень и размер поля
-        self.lvl_field.setText(f"Уровен: {self.lvl}")
+        # отображаем уровень и размер поля
+        self.lvl_field.setText(f"Уровень: {self.lvl}")
         self.size_field_label.setText(f"Размер поля: {self.size_x} * {self.size_y}")
 
     def update_time(self):
@@ -251,7 +94,9 @@ class Saper(QWidget):
     def func_new_game(self):
         # новая игра
         self.timer.stop()
+        self.time_field.display(0)
         self.current_time = 0
+        self.number_open_cells = 0
         self.secondary_field = [[[] for _ in range(self.size_x)] for _ in range(self.size_y)]
         self.hidden_field = [[[] for _ in range(self.size_x)] for _ in range(self.size_y)]
         self.progres_field.setValue(0)
@@ -268,7 +113,7 @@ class Saper(QWidget):
         self.game_active = True
 
     def creating_field(self, kor):
-        # создём поле и расставляем бомбы на нем
+        # создём поле
 
         self.field_creation_flag = False
 
@@ -318,8 +163,6 @@ class Saper(QWidget):
         self.timer.start(1000)
 
     def open_cell(self, kor):
-        # открытие клетки
-
         # возращаем True если клетка уже открытка
         if self.secondary_field[kor[0]][kor[1]] != []:
             return True
@@ -408,7 +251,7 @@ class Saper(QWidget):
                 self.button_coordinates[row][col].setEnabled(True)
 
     def check_win(self):
-        # проверка победил игрок или нет
+        # проверяем победил игрок или нет
         for row in range(self.size_x):
             for col in range(self.size_y):
                 if self.hidden_field[row][col] != '*' and self.secondary_field[row][col] == []:
@@ -432,10 +275,11 @@ class Saper(QWidget):
 
     def completion_progressbar(self):
         # отоброжаем прогресс
-        progress = (self.number_open_cells * 100) // (self.size_field[0] * self.size_field[1] - self.number_bombs)
+        progress = (self.number_open_cells * 100) // self.all_number_cells
         self.progres_field.setValue(progress)
 
     def run_left(self):
+        # выпоняем действие при нажатии левой кнопкой мыши
         if self.game_active:
             row, col = 0, 0
             for row_b in range(len(self.button_coordinates)):
@@ -457,6 +301,7 @@ class Saper(QWidget):
                 return self.end_game_win()
 
     def run_right(self):
+        # выпоняем действие при нажатии правой кнопкой мыши
         row, col = 0, 0
         for row_b in range(len(self.button_coordinates)):
             for col_b in range(len(self.button_coordinates[row_b])):

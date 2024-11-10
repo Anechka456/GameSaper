@@ -33,10 +33,10 @@ color: rgb(170, 0, 0)</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="dus">
+  <widget class="QPushButton" name="forest">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>115</x>
      <y>430</y>
      <width>201</width>
      <height>41</height>
@@ -54,7 +54,7 @@ background-color: rgb(157, 125, 125);</string>
   <widget class="QPushButton" name="mountains">
    <property name="geometry">
     <rect>
-     <x>430</x>
+     <x>435</x>
      <y>430</y>
      <width>201</width>
      <height>41</height>
@@ -72,7 +72,7 @@ background-color: rgb(157, 125, 125);</string>
   <widget class="QPushButton" name="space">
    <property name="geometry">
     <rect>
-     <x>770</x>
+     <x>755</x>
      <y>430</y>
      <width>201</width>
      <height>41</height>
@@ -104,6 +104,29 @@ background-color: rgb(157, 125, 125);</string>
    </property>
    <property name="text">
     <string>Назад</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>160</y>
+     <width>571</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 22pt &quot;MS Shell Dlg 2&quot;;
+color: rgb(170, 0, 0)</string>
+   </property>
+   <property name="text">
+    <string>Выберите фон</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>
