@@ -1,9 +1,6 @@
-import sqlite3
-import sys
-
 from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QBrush, QPalette
-from PyQt6.QtWidgets import QApplication, QWidget, QLabel
+from PyQt6.QtWidgets import QWidget, QLabel
 
 
 class Setting(QWidget):

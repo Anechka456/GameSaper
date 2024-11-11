@@ -21,6 +21,18 @@ class Lvl(QWidget):
     def level_4(self):
         return self.lvl4
 
+    def level_time_1(self):
+        return self.time_lvl1
+
+    def level_time_2(self):
+        return self.time_lvl2
+
+    def level_time_3(self):
+        return self.time_lvl3
+
+    def level_time_4(self):
+        return self.time_lvl4
+
     def exit_button(self):
         return self.exit
 

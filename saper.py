@@ -5,15 +5,18 @@ import copy
 
 from PyQt6 import uic
 from PyQt6.QtCore import Qt, QTimer
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QButtonGroup, QMessageBox
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QWidget, QPushButton, QButtonGroup, QMessageBox
+from PyQt6.uic.properties import QtCore
 
 
 class Saper(QWidget):
-    def __init__(self, size_row, size_col, lvl):
+    def __init__(self, size_row, size_col, lvl, time):
         super().__init__()
         self.size_row = size_row
         self.size_col = size_col
         self.lvl = lvl
+        self.time = time
         uic.loadUi("QT_files/untitled_field.ui", self)  # Загружаем дизайн
         self.initUI()
 
@@ -27,6 +30,7 @@ class Saper(QWidget):
         self.hidden_field = [[[] for _ in range(self.size_x)] for _ in range(self.size_y)]
         self.possible_bombs = []  # координаты клеток где можно поставить бомбы
         self.flag_points = []  # координаты клеток где стоит флажок
+
         for i in range(len(self.secondary_field)):
             for j in range(len(self.secondary_field[i])):
                 self.possible_bombs.append((i, j))
@@ -46,7 +50,7 @@ class Saper(QWidget):
 
         self.field_group = QButtonGroup()
 
-        # таймер
+        # создаём таймер
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_time)
         self.current_time = 0
@@ -80,19 +84,21 @@ class Saper(QWidget):
             i.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
             i.customContextMenuRequested.connect(self.run_right)  # нажатие правой кнопкой мыши
 
+        self.new_game.setStyleSheet("border-image : url(Img/emoji.jpg);")
         self.new_game.clicked.connect(self.func_new_game)
-
         # отображаем уровень и размер поля
         self.lvl_field.setText(f"Уровень: {self.lvl}")
         self.size_field_label.setText(f"Размер поля: {self.size_x} * {self.size_y}")
 
     def update_time(self):
-        # таймер
+        """функция осуществляет таймер"""
         self.current_time += 1
         self.time_field.display(self.current_time)
+        if self.current_time == self.time:
+            self.end_game()
 
     def func_new_game(self):
-        # новая игра
+        """функция начинает новую игру"""
         self.timer.stop()
         self.time_field.display(0)
         self.current_time = 0
@@ -113,7 +119,7 @@ class Saper(QWidget):
         self.game_active = True
 
     def creating_field(self, kor):
-        # создём поле
+        """функция создаёт поле"""
 
         self.field_creation_flag = False
 
@@ -211,13 +217,13 @@ class Saper(QWidget):
                     self.open_cell((row + 1, col - 1))
 
     def flag_cell(self, kor):
-        # ставим флаг
+        """функция ставит флаг"""
         self.secondary_field[kor[0]][kor[1]] = "F"
         self.button_coordinates[kor[0]][kor[1]].setText('🚩')
         self.bomb_field.display(self.bomb_field.intValue() - 1)
 
     def open_flag_cell(self, kor):
-        # убираем флаг
+        """функция убирает флаг"""
         self.secondary_field[kor[0]][kor[1]] = []
         self.button_coordinates[kor[0]][kor[1]].setText('')
         self.bomb_field.display(self.bomb_field.intValue() + 1)
@@ -250,36 +256,69 @@ class Saper(QWidget):
                 self.button_coordinates[row][col].setText(str(self.hidden_field[row][col]))
                 self.button_coordinates[row][col].setEnabled(True)
 
+    # def display_field(self):
+    #     for row in range(len(self.secondary_field)):
+    #         for col in range(len(self.secondary_field[row])):
+    #             if self.secondary_field[row][col] == []:
+    #                 continue
+    #             self.button_coordinates[row][col].setText(str(self.hidden_field[row][col]))
+    #             self.button_coordinates[row][col].setEnabled(True)
+
+    def keyPressEvent(self, event):
+        try:
+            # Проверяем, нажата ли комбинация Ctrl+D
+            if event.key() == Qt.Key.Key_D and event.modifiers() == Qt.KeyboardModifier.ControlModifier:
+                self.number_open_cells = 0
+                self.display_hidden_field()
+        except Exception as e:
+            print(f"Ошибка в keyPressEvent: {e}")
+
+    # def keyReleaseEvent(self, event):
+    #     try:
+    #         # Проверяем, отпущена ли комбинация Ctrl+D
+    #         if event.key() == Qt.Key.Key_D and event.modifiers() == Qt.KeyboardModifier.ControlModifier:
+    #             self.display_field()
+    #     except Exception as e:
+    #         print(f"Ошибка в keyReleaseEvent: {e}")
+
     def check_win(self):
-        # проверяем победил игрок или нет
+        """функция проверяет победил игрок или нет"""
         for row in range(self.size_x):
             for col in range(self.size_y):
                 if self.hidden_field[row][col] != '*' and self.secondary_field[row][col] == []:
                     return False
         return True
 
-    def end_game(self):
-        # выводим сообщение о том, что игрок проиграл
+    def end_game_over(self):
+        """функция выводит сообщение о том, что игрок проиграл"""
         self.timer.stop()
         self.current_time = 0
         self.game_active = False
         self.display_hidden_field()
         QMessageBox.information(self, "Game Over", "Вы наткнулись на бомбу!")
 
+    def end_game(self):
+        """функция выводит сообщение о том, что игрок не смог разминировать поле за заданное время"""
+        self.timer.stop()
+        self.current_time = 0
+        self.game_active = False
+        self.display_hidden_field()
+        QMessageBox.information(self, "Game Over", "Время истекло! Попробуйте еще раз.")
+
     def end_game_win(self):
-        # выводим сообщение о победе
+        """функция выводит сообщение о том, что игрок победил"""
         self.timer.stop()
         self.current_time = 0
         QMessageBox.information(self, "Поздравляем!", "Вы открыли все безопасные клетки!")
         self.game_active = False
 
     def completion_progressbar(self):
-        # отоброжаем прогресс
+        """функция отоброжает прогресс"""
         progress = (self.number_open_cells * 100) // self.all_number_cells
         self.progres_field.setValue(progress)
 
     def run_left(self):
-        # выпоняем действие при нажатии левой кнопкой мыши
+        """функция выпоняет действие при нажатии левой кнопкой мыши"""
         if self.game_active:
             row, col = 0, 0
             for row_b in range(len(self.button_coordinates)):
@@ -289,19 +328,18 @@ class Saper(QWidget):
                         break
             if self.field_creation_flag:
                 self.creating_field((row, col))
-
             if self.secondary_field[row][col] == 'F':
                 return
             elif self.hidden_field[row][col] != '*':
                 self.open_cell((row, col))
                 self.completion_progressbar()
             else:
-                return self.end_game()
+                return self.end_game_over()
             if self.check_win():
                 return self.end_game_win()
 
     def run_right(self):
-        # выпоняем действие при нажатии правой кнопкой мыши
+        """функция выпоняет действие при нажатии правой кнопкой мыши"""
         row, col = 0, 0
         for row_b in range(len(self.button_coordinates)):
             for col_b in range(len(self.button_coordinates[row_b])):
@@ -321,11 +359,3 @@ class Saper(QWidget):
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Saper(10, 10, 1)
-    ex.show()
-    sys.excepthook = except_hook
-    sys.exit(app.exec())

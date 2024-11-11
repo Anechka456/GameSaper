@@ -137,7 +137,7 @@ color: rgb(202, 0, 0);</string>
     </rect>
    </property>
    <property name="text">
-    <string>Смайлик</string>
+    <string/>
    </property>
   </widget>
   <widget class="QWidget" name="gridLayoutWidget">
