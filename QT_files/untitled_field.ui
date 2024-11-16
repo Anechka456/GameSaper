@@ -24,7 +24,8 @@
    </property>
    <property name="styleSheet">
     <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(106, 0, 0);</string>
+color: rgb(106, 0, 0);
+background-color: rgb(193, 170, 170);</string>
    </property>
    <property name="text">
     <string>Уровень:</string>
@@ -41,7 +42,8 @@ color: rgb(106, 0, 0);</string>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(106, 0, 0);</string>
+color: rgb(106, 0, 0);
+background-color: rgb(193, 170, 170);</string>
    </property>
    <property name="text">
     <string>Размер поля:</string>
@@ -51,14 +53,15 @@ color: rgb(106, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>110</y>
+     <y>113</y>
      <width>91</width>
      <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(106, 0, 0);</string>
+color: rgb(106, 0, 0);
+background-color: rgb(193, 170, 170);</string>
    </property>
    <property name="text">
     <string>Прогресс:</string>

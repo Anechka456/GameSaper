@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QWidget, QLabel
 class Setting(QWidget):
     def __init__(self, windows):
         super().__init__()
-        self.windows = windows
+        self.main_windows = windows
         uic.loadUi("QT_files/untitled_setting.ui", self)  # Загружаем дизайн
         self.initUI()
 
@@ -45,7 +45,7 @@ class Setting(QWidget):
         pixmap = pixmap.scaled(self.size())
         palette = QPalette()
         palette.setBrush(QPalette.ColorRole.Window, QBrush(pixmap))
-        self.windows.setPalette(palette)
+        self.main_windows.setPalette(palette)
 
     def change_background_mountains(self):
         """Функция устанавливает фон с изображением гор"""
@@ -53,7 +53,7 @@ class Setting(QWidget):
         pixmap = pixmap.scaled(self.size())
         palette = QPalette()
         palette.setBrush(QPalette.ColorRole.Window, QBrush(pixmap))
-        self.windows.setPalette(palette)
+        self.main_windows.setPalette(palette)
 
     def change_background_space(self):
         """Функция устанавливает фон с изображением космоса"""
@@ -61,13 +61,10 @@ class Setting(QWidget):
         pixmap = pixmap.scaled(self.size())
         palette = QPalette()
         palette.setBrush(QPalette.ColorRole.Window, QBrush(pixmap))
-        self.windows.setPalette(palette)
+        self.main_windows.setPalette(palette)
 
     def exit_button(self):
         return self.exit
 
     def login_button(self):
         return self.setting
-
-
-
