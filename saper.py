@@ -271,7 +271,6 @@ class Saper(QWidget):
         try:
             # Проверяем, нажата ли комбинация Ctrl+D
             if event.key() == Qt.Key.Key_D and event.modifiers() == Qt.KeyboardModifier.ControlModifier:
-                self.number_open_cells = 0
                 self.cheats()
         except Exception as e:
             print(f"Ошибка в keyPressEvent: {e}")
@@ -358,10 +357,15 @@ class Saper(QWidget):
         """Функция добавляет в БД запись о победе"""
         con = sqlite3.connect("bd/victory_data")
         cur = con.cursor()
-        max_id = cur.execute("SELECT max(id) FROM victory").fetchone()[0] + 1
-        cur.execute(f"""INSERT INTO victory(id, lvl, time) VALUES({max_id}, {max_id}, {max_id})""")
-        cur.execute(f"""INSERT INTO durations(duration) VALUES({duration})""")
-        cur.execute(f"""INSERT INTO level(name, size) VALUES('{self.lvl}', '{self.size_x} * {self.size_y}')""")
+        max_id = cur.execute("SELECT max(id) FROM victory").fetchone()[0]
+        if max_id is None:
+            max_id = 1
+        else:
+            max_id += 1
+        cur.execute(f"""INSERT INTO durations(id, duration) VALUES({max_id}, {duration})""")
+        cur.execute(
+            f"""INSERT INTO level(id, name, size) VALUES({max_id}, '{self.lvl}', '{self.size_x} * {self.size_y}')""")
+        cur.execute(f"""INSERT INTO victory(lvl, time) VALUES({max_id}, {max_id})""")
         con.commit()
 
     def adding_cell_image(self, coordinates, num):
