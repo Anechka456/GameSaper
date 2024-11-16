@@ -25,17 +25,16 @@ class Statistics(QWidget):
         result = cur.execute("""SELECT level.name, level.size, durations.duration FROM victory 
                 JOIN level ON victory.lvl = level.id 
                 JOIN durations ON victory.time = durations.id""").fetchall()
-
-        # Заполяем размеры таблицы
-        self.tableWidget.setRowCount(len(result))
-        self.tableWidget.setColumnCount(len(result[0]))
-        self.tableWidget.setHorizontalHeaderLabels(
-            ['Уровень', 'Размер поля', 'Время прохождения'])
-        # Заполняем таблицу полученными элементами
-        for i, elem in enumerate(result):
-            for j, val in enumerate(elem):
-                self.tableWidget.setItem(i, j, QTableWidgetItem(str(val)))
-
+        if result:
+            # Заполяем размеры таблицы
+            self.tableWidget.setRowCount(len(result))
+            self.tableWidget.setColumnCount(len(result[0]))
+            self.tableWidget.setHorizontalHeaderLabels(
+                ['Уровень', 'Размер поля', 'Время прохождения'])
+            # Заполняем таблицу полученными элементами
+            for i, elem in enumerate(result):
+                for j, val in enumerate(elem):
+                    self.tableWidget.setItem(i, j, QTableWidgetItem(str(val)))
         con.close()
 
     def number_wins(self):
@@ -43,7 +42,8 @@ class Statistics(QWidget):
         con = sqlite3.connect("db/victory_data")
         cur = con.cursor()
         result = cur.execute("""SELECT id FROM victory""").fetchall()
-        self.max_victory.setText(f'Всего побед: {len(result)}')
+        if result:
+            self.max_victory.setText(f' Всего побед: {len(result)}')
         con.close()
 
     def time(self):
@@ -51,7 +51,8 @@ class Statistics(QWidget):
         con = sqlite3.connect("db/victory_data")
         cur = con.cursor()
         result = cur.execute("""SELECT min(duration) FROM durations""").fetchone()[0]
-        self.best_time.setText(f'Лучшее время: {result}с.')
+        if result:
+            self.best_time.setText(f' Лучшее время: {result}с.')
         con.close()
 
     def exit_button(self):

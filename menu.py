@@ -1,7 +1,5 @@
-import sys
-
 from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication, QWidget
+from PyQt6.QtWidgets import QWidget
 
 
 class Menu(QWidget):
@@ -17,11 +15,3 @@ class Menu(QWidget):
 
     def setting_button(self):
         return self.setting
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Menu()
-    ex.show()
-    sys.exit(app.exec())
-

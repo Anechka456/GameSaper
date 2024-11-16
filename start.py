@@ -1,5 +1,4 @@
 import sys
-
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget
 
@@ -182,7 +181,7 @@ def except_hook(cls, exception, traceback):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    mainWin = MainWindow()
-    mainWin.show()
+    ex = MainWindow()
+    ex.show()
     sys.excepthook = except_hook
     sys.exit(app.exec())

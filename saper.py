@@ -6,7 +6,7 @@ import copy
 
 from PyQt6 import uic
 from PyQt6.QtCore import Qt, QTimer
-from PyQt6.QtWidgets import QWidget, QPushButton, QButtonGroup, QMessageBox
+from PyQt6.QtWidgets import QWidget, QPushButton, QButtonGroup, QMessageBox, QApplication
 
 
 class Saper(QWidget):
@@ -66,6 +66,7 @@ class Saper(QWidget):
             row_button_coordinates = []
             for j in range(self.size_field[1]):
                 self.button = QPushButton('', self)
+                self.button.setStyleSheet("border-image : url(Img/cell.jpg);")
                 self.field_group.addButton(self.button)
                 row_button_coordinates.append(self.button)
                 size_button = int((min(self.width(), self.height()) // max(self.size_field)) / 1.54)
@@ -85,6 +86,7 @@ class Saper(QWidget):
 
         self.new_game.setStyleSheet("border-image : url(Img/emoji.jpg);")
         self.new_game.clicked.connect(self.func_new_game)
+
         # отображаем уровень и размер поля
         self.lvl_field.setText(f"Уровень: {self.lvl}")
         self.size_field_label.setText(f"Размер поля: {self.size_x} * {self.size_y}")
@@ -99,6 +101,7 @@ class Saper(QWidget):
     def func_new_game(self):
         """функция начинает новую игру"""
         self.timer.stop()
+        self.new_game.setStyleSheet("border-image : url(Img/emoji.jpg);")
         self.time_field.display(0)
         self.current_time = 0
         self.number_open_cells = 0
@@ -113,6 +116,7 @@ class Saper(QWidget):
         self.field_creation_flag = True
         for i in self.button_coordinates:
             for but in i:
+                but.setStyleSheet("border-image : url(Img/cell.jpg);")
                 but.setEnabled(True)
                 but.setText('')
         self.game_active = True
@@ -167,21 +171,22 @@ class Saper(QWidget):
 
         self.timer.start(1000)
 
-    def open_cell(self, kor):
+    def open_cell(self, coordinates):
         # возращаем True если клетка уже открытка
-        if self.secondary_field[kor[0]][kor[1]] != []:
+        if self.secondary_field[coordinates[0]][coordinates[1]] != []:
             return True
 
-        self.button_coordinates[kor[0]][kor[1]].setEnabled(False)  # Отключаем кнопку
+        self.button_coordinates[coordinates[0]][coordinates[1]].setEnabled(False)  # Отключаем кнопку
         self.number_open_cells += 1
 
         # открываем клетку
-        self.secondary_field[kor[0]][kor[1]] = self.hidden_field[kor[0]][kor[1]]
-        self.button_coordinates[kor[0]][kor[1]].setText(str(self.hidden_field[kor[0]][kor[1]]))
+        self.secondary_field[coordinates[0]][coordinates[1]] = self.hidden_field[coordinates[0]][coordinates[1]]
+        # меняем изображение кнопки
+        self.adding_cell_image(coordinates, self.hidden_field[coordinates[0]][coordinates[1]])
 
         # открываем соседние клетки если клетка нулевая
-        if self.secondary_field[kor[0]][kor[1]] == 0:
-            row, col = kor[0], kor[1]
+        if self.secondary_field[coordinates[0]][coordinates[1]] == 0:
+            row, col = coordinates[0], coordinates[1]
 
             if 0 <= row < self.size_x and 0 <= col - 1 < self.size_y:
                 if self.hidden_field[row][col - 1] != '*' and self.secondary_field[row][col - 1] != 'F':
@@ -252,33 +257,24 @@ class Saper(QWidget):
     def display_hidden_field(self):
         for row in range(len(self.hidden_field)):
             for col in range(len(self.hidden_field[row])):
-                self.button_coordinates[row][col].setText(str(self.hidden_field[row][col]))
-                self.button_coordinates[row][col].setEnabled(True)
+                if self.hidden_field[row][col] == '*' and self.secondary_field[row][col] != 'F':
+                    self.adding_bomb_image((row, col))
+                    continue
+                self.open_cell((row, col))
 
-    # def display_field(self):
-    #     for row in range(len(self.secondary_field)):
-    #         for col in range(len(self.secondary_field[row])):
-    #             if self.secondary_field[row][col] == []:
-    #                 continue
-    #             self.button_coordinates[row][col].setText(str(self.hidden_field[row][col]))
-    #             self.button_coordinates[row][col].setEnabled(True)
+    def cheats(self):
+        for row in range(len(self.hidden_field)):
+            for col in range(len(self.hidden_field[row])):
+                self.button_coordinates[row][col].setText(str(self.hidden_field[row][col]))
 
     def keyPressEvent(self, event):
         try:
             # Проверяем, нажата ли комбинация Ctrl+D
             if event.key() == Qt.Key.Key_D and event.modifiers() == Qt.KeyboardModifier.ControlModifier:
                 self.number_open_cells = 0
-                self.display_hidden_field()
+                self.cheats()
         except Exception as e:
             print(f"Ошибка в keyPressEvent: {e}")
-
-    # def keyReleaseEvent(self, event):
-    #     try:
-    #         # Проверяем, отпущена ли комбинация Ctrl+D
-    #         if event.key() == Qt.Key.Key_D and event.modifiers() == Qt.KeyboardModifier.ControlModifier:
-    #             self.display_field()
-    #     except Exception as e:
-    #         print(f"Ошибка в keyReleaseEvent: {e}")
 
     def check_win(self):
         """функция проверяет победил игрок или нет"""
@@ -291,6 +287,7 @@ class Saper(QWidget):
     def end_game_over(self):
         """функция выводит сообщение о том, что игрок проиграл"""
         self.timer.stop()
+        self.new_game.setStyleSheet("border-image : url(Img/emoji_died.jpg);")
         self.current_time = 0
         self.game_active = False
         self.display_hidden_field()
@@ -299,6 +296,7 @@ class Saper(QWidget):
     def end_game(self):
         """функция выводит сообщение о том, что игрок не смог разминировать поле за заданное время"""
         self.timer.stop()
+        self.new_game.setStyleSheet("border-image : url(Img/emoji_died.jpg);")
         self.current_time = 0
         self.game_active = False
         self.display_hidden_field()
@@ -366,6 +364,27 @@ class Saper(QWidget):
         cur.execute(f"""INSERT INTO level(name, size) VALUES('{self.lvl}', '{self.size_x} * {self.size_y}')""")
         con.commit()
 
+    def adding_cell_image(self, coordinates, num):
+        """Функция изменят изображение кнопки на определённую цифру"""
+        if num == 0:
+            self.button_coordinates[coordinates[0]][coordinates[1]].setStyleSheet(
+                f"border-image : url(Img/open_cell.jpg);")
+            return
+        self.button_coordinates[coordinates[0]][coordinates[1]].setStyleSheet(
+            f"border-image : url(Img/cell_{num}.jpg);")
+
+    def adding_bomb_image(self, coordinates):
+        """Функция изменят изображение кнопки на бомбу"""
+        self.button_coordinates[coordinates[0]][coordinates[1]].setStyleSheet(f"border-image : url(Img/cell_bomb.jpg);")
+
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    ex = Saper(8, 8, 1, '-1')
+    ex.show()
+    sys.excepthook = except_hook
+    sys.exit(app.exec())

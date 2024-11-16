@@ -60,8 +60,13 @@ color: rgb(170, 0, 0)</string>
      <height>671</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(193, 170, 170);
+color: rgb(85, 0, 0);
+font: 15pt &quot;MS Sans Serif&quot;;</string>
+   </property>
    <attribute name="horizontalHeaderDefaultSectionSize">
-    <number>208</number>
+    <number>206</number>
    </attribute>
   </widget>
   <widget class="QLabel" name="max_victory">
@@ -78,10 +83,11 @@ color: rgb(170, 0, 0)</string>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 22pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(170, 0, 0)</string>
+color: rgb(170, 0, 0);
+background-color: rgb(193, 170, 170);</string>
    </property>
    <property name="text">
-    <string>Всего побед: -</string>
+    <string> Всего побед: -</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -101,10 +107,11 @@ color: rgb(170, 0, 0)</string>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 22pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(170, 0, 0)</string>
+color: rgb(170, 0, 0);
+background-color: rgb(193, 170, 170);</string>
    </property>
    <property name="text">
-    <string>Лучшее время: -</string>
+    <string> Лучшее время: -</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
