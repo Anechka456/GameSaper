@@ -7,6 +7,7 @@ from saper import Saper
 from setting import Setting
 from lvl import Lvl
 from menu import Menu
+from statistics import Statistics
 
 
 class MainWindow(QMainWindow):
@@ -25,6 +26,7 @@ class MainWindow(QMainWindow):
         self.menu = self.create_window1()
         self.setting = self.create_window2()
         self.lvl = self.create_window3()
+        self.statistics = self.create_window5()
         self.saper_lvl1 = self.create_window4((8, 8), '1', '-1')
         self.saper_lvl2 = self.create_window4((10, 10), '2', '-1')
         self.saper_lvl3 = self.create_window4((13, 13), '3', '-1')
@@ -46,6 +48,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.saper_time_lvl2)
         self.stacked_widget.addWidget(self.saper_time_lvl3)
         self.stacked_widget.addWidget(self.saper_time_lvl4)
+        self.stacked_widget.addWidget(self.statistics)
 
         # Устанавливаем QStackedWidget как центральный виджет
         self.setCentralWidget(self.stacked_widget)
@@ -59,6 +62,9 @@ class MainWindow(QMainWindow):
 
         settings_button = self.menu.setting_button()
         settings_button.clicked.connect(self.show_window2)
+
+        statistics_button = self.menu.statistics_button()
+        statistics_button.clicked.connect(self.show_window12)
 
         return self.menu
 
@@ -112,6 +118,15 @@ class MainWindow(QMainWindow):
         back_button.clicked.connect(self.show_window3)
         return self.saper
 
+    def create_window5(self):
+        """Создание окна статистики побед"""
+        self.statistics = Statistics()
+
+        back_button = self.statistics.exit_button()
+        back_button.clicked.connect(self.show_window1)
+
+        return self.statistics
+
     def show_window1(self):
         """Показать окно меню"""
         self.stacked_widget.setCurrentIndex(0)
@@ -155,6 +170,10 @@ class MainWindow(QMainWindow):
     def show_window11(self):
         """Показать окно 4 уровня тайм-атака"""
         self.stacked_widget.setCurrentIndex(10)
+
+    def show_window12(self):
+        """Показать окно статистики побед"""
+        self.stacked_widget.setCurrentIndex(11)
 
 
 def except_hook(cls, exception, traceback):

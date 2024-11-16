@@ -40,7 +40,7 @@ class Setting(QWidget):
         self.space.clicked.connect(self.change_background_space)
 
     def change_background_forest(self):
-        # Установка фона с изображением леса
+        """Функция устанавливает фон с изображением леса"""
         pixmap = QPixmap("Img/forest.png")
         pixmap = pixmap.scaled(self.size())
         palette = QPalette()
@@ -48,7 +48,7 @@ class Setting(QWidget):
         self.windows.setPalette(palette)
 
     def change_background_mountains(self):
-        # Установка фона с изображением гор
+        """Функция устанавливает фон с изображением гор"""
         pixmap = QPixmap("Img/mountains.jpg")
         pixmap = pixmap.scaled(self.size())
         palette = QPalette()
@@ -56,7 +56,7 @@ class Setting(QWidget):
         self.windows.setPalette(palette)
 
     def change_background_space(self):
-        # Установка фона с изображением космоса
+        """Функция устанавливает фон с изображением космоса"""
         pixmap = QPixmap("Img/space.jpg")
         pixmap = pixmap.scaled(self.size())
         palette = QPalette()
@@ -69,34 +69,5 @@ class Setting(QWidget):
     def login_button(self):
         return self.setting
 
-
-# def create_database():
-#     conn = sqlite3.connect('images.db')
-#     cursor = conn.cursor()
-#
-#     cursor.execute('''
-#         CREATE TABLE IF NOT EXISTS Images (
-#             id INTEGER PRIMARY KEY AUTOINCREMENT,
-#             image BLOB NOT NULL
-#         )
-#     ''')
-#
-#     with open("Img/forest.png", "rb") as file:
-#         image_data = file.read()
-#
-#     cursor.execute('INSERT INTO Images (image) VALUES (?)', (image_data,))
-#     conn.commit()
-#     conn.close()
-#
-#
-# def get_image_from_db():
-#     conn = sqlite3.connect('images.db')
-#     cursor = conn.cursor()
-#
-#     cursor.execute('SELECT image FROM Images WHERE id=1')
-#     image_data = cursor.fetchone()[0]
-#     conn.close()
-#
-#     return QByteArray(image_data)
 
 

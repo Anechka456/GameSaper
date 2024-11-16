@@ -12,6 +12,9 @@ class Menu(QWidget):
     def level_button(self):
         return self.lvl
 
+    def statistics_button(self):
+        return self.data
+
     def setting_button(self):
         return self.setting
 

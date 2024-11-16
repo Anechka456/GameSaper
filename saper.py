@@ -1,3 +1,4 @@
+import sqlite3
 import sys
 
 import random
@@ -5,9 +6,7 @@ import copy
 
 from PyQt6 import uic
 from PyQt6.QtCore import Qt, QTimer
-from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QWidget, QPushButton, QButtonGroup, QMessageBox
-from PyQt6.uic.properties import QtCore
 
 
 class Saper(QWidget):
@@ -308,6 +307,7 @@ class Saper(QWidget):
     def end_game_win(self):
         """функция выводит сообщение о том, что игрок победил"""
         self.timer.stop()
+        self.adding_victory(self.current_time)
         self.current_time = 0
         QMessageBox.information(self, "Поздравляем!", "Вы открыли все безопасные клетки!")
         self.game_active = False
@@ -355,6 +355,16 @@ class Saper(QWidget):
 
     def exit_button(self):
         return self.exit
+
+    def adding_victory(self, duration):
+        """Функция добавляет в БД запись о победе"""
+        con = sqlite3.connect("db/victory_data")
+        cur = con.cursor()
+        max_id = cur.execute("SELECT max(id) FROM victory").fetchone()[0] + 1
+        cur.execute(f"""INSERT INTO victory(id, lvl, time) VALUES({max_id}, {max_id}, {max_id})""")
+        cur.execute(f"""INSERT INTO durations(duration) VALUES({duration})""")
+        cur.execute(f"""INSERT INTO level(name, size) VALUES('{self.lvl}', '{self.size_x} * {self.size_y}')""")
+        con.commit()
 
 
 def except_hook(cls, exception, traceback):

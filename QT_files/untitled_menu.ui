@@ -37,7 +37,7 @@ font: 36pt &quot;MS Shell Dlg 2&quot;;</string>
    <property name="geometry">
     <rect>
      <x>280</x>
-     <y>450</y>
+     <y>540</y>
      <width>501</width>
      <height>81</height>
     </rect>
@@ -69,6 +69,26 @@ font: 24pt &quot;MS UI Gothic&quot;;
    </property>
    <property name="text">
     <string>Выбор уровня</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="data">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>450</y>
+     <width>501</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(99, 0, 0);
+background-color: rgb(156, 138, 138);
+font: 20pt &quot;MS UI Gothic&quot;;
+  
+</string>
+   </property>
+   <property name="text">
+    <string>Статистика побед</string>
    </property>
   </widget>
  </widget>
