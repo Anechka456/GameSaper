@@ -355,7 +355,7 @@ class Saper(QWidget):
 
     def adding_victory(self, duration):
         """Функция добавляет в БД запись о победе"""
-        con = sqlite3.connect("bd/victory_data")
+        con = sqlite3.connect("db/victory_data")
         cur = con.cursor()
         max_id = cur.execute("SELECT max(id) FROM victory").fetchone()[0]
         if max_id is None:

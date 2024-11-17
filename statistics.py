@@ -20,7 +20,7 @@ class Statistics(QWidget):
 
     def update_results(self):
         """Функция выводит все результаты побед в таблицу"""
-        con = sqlite3.connect("bd/victory_data")
+        con = sqlite3.connect("db/victory_data")
         cur = con.cursor()
         result = cur.execute("""SELECT level.name, level.size, durations.duration FROM victory 
                 JOIN level ON victory.lvl = level.id 
@@ -39,7 +39,7 @@ class Statistics(QWidget):
 
     def number_wins(self):
         """Функция высчитывет кол-во побед и выводит результат"""
-        con = sqlite3.connect("bd/victory_data")
+        con = sqlite3.connect("db/victory_data")
         cur = con.cursor()
         result = cur.execute("""SELECT id FROM victory""").fetchall()
         if result:
@@ -48,7 +48,7 @@ class Statistics(QWidget):
 
     def time(self):
         """Функция высчитывет лучшее время прохождение игры и выводит результат"""
-        con = sqlite3.connect("bd/victory_data")
+        con = sqlite3.connect("db/victory_data")
         cur = con.cursor()
         result = cur.execute("""SELECT min(duration) FROM durations""").fetchone()[0]
         if result:
