@@ -22,9 +22,8 @@ class Statistics(QWidget):
         """Функция выводит все результаты побед в таблицу"""
         con = sqlite3.connect("db/victory_data")
         cur = con.cursor()
-        result = cur.execute("""SELECT level.name, level.size, durations.duration FROM victory 
-                JOIN level ON victory.lvl = level.id 
-                JOIN durations ON victory.time = durations.id""").fetchall()
+        result = cur.execute("""SELECT level.name, level.size, victory.duration FROM victory 
+                JOIN level ON victory.lvl = level.id """).fetchall()
         if result:
             # Заполяем размеры таблицы
             self.tableWidget.setRowCount(len(result))
@@ -50,7 +49,7 @@ class Statistics(QWidget):
         """Функция высчитывет лучшее время прохождение игры и выводит результат"""
         con = sqlite3.connect("db/victory_data")
         cur = con.cursor()
-        result = cur.execute("""SELECT min(duration) FROM durations""").fetchone()[0]
+        result = cur.execute("""SELECT min(duration) FROM victory""").fetchone()[0]
         if result:
             self.best_time.setText(f' Лучшее время: {result}с.')
         con.close()

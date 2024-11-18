@@ -362,17 +362,21 @@ class Saper(QWidget):
 
     def adding_victory(self, duration):
         """Функция добавляет в БД запись о победе"""
+
+        dictionary_levels = {
+            '1': 1,
+            '2': 2,
+            '3': 3,
+            '4': 4,
+            '1 time-attack ⏱️': 5,
+            '2 time-attack ⏱️': 6,
+            '3 time-attack ⏱️': 7,
+            '4 time-attack ⏱️': 8,
+        }
+
         con = sqlite3.connect("db/victory_data")
         cur = con.cursor()
-        max_id = cur.execute("SELECT max(id) FROM victory").fetchone()[0]
-        if max_id is None:
-            max_id = 1
-        else:
-            max_id += 1
-        cur.execute(f"""INSERT INTO durations(id, duration) VALUES({max_id}, {duration})""")
-        cur.execute(
-            f"""INSERT INTO level(id, name, size) VALUES({max_id}, '{self.lvl}', '{self.size_x} * {self.size_y}')""")
-        cur.execute(f"""INSERT INTO victory(lvl, time) VALUES({max_id}, {max_id})""")
+        cur.execute(f"""INSERT INTO victory(lvl, duration) VALUES({dictionary_levels[self.lvl]}, {duration})""")
         con.commit()
 
     def adding_cell_image(self, coordinates, num):
