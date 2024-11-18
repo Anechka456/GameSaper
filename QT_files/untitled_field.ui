@@ -124,7 +124,9 @@ font: 16pt &quot;MS Shell Dlg 2&quot;;</string>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(202, 0, 0);</string>
+color: rgb(202, 0, 0);
+
+</string>
    </property>
   </widget>
   <widget class="QPushButton" name="new_game">
@@ -153,6 +155,48 @@ color: rgb(202, 0, 0);</string>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout"/>
+  </widget>
+  <widget class="QLabel" name="warning">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>10</y>
+     <width>181</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;
+color: rgb(106, 0, 0);
+background-color: rgb(193, 170, 170);</string>
+   </property>
+   <property name="text">
+    <string>Время ограничено!</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="warning2">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>60</y>
+     <width>431</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;
+color: rgb(106, 0, 0);
+background-color: rgb(193, 170, 170);</string>
+   </property>
+   <property name="text">
+    <string>Чтобы разминировать это поле вам даётся: </string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
  </widget>
  <resources/>

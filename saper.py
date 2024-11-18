@@ -17,6 +17,13 @@ class Saper(QWidget):
         self.lvl = lvl
         self.time = time
         uic.loadUi("QT_files/untitled_field.ui", self)  # Загружаем дизайн
+
+        if time == '-1':
+            self.warning.setVisible(False)
+            self.warning2.setVisible(False)
+        else:
+            self.warning2.setText(f' Чтобы разминировать это поле вам даётся: {self.time}c ')
+
         self.initUI()
 
     def initUI(self):

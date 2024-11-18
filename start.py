@@ -30,10 +30,10 @@ class MainWindow(QMainWindow):
         self.saper_lvl2 = self.create_window4((10, 10), '2', '-1')
         self.saper_lvl3 = self.create_window4((13, 13), '3', '-1')
         self.saper_lvl4 = self.create_window4((15, 15), '4', '-1')
-        self.saper_time_lvl1 = self.create_window4((8, 8), '1 time-attack', 60)
-        self.saper_time_lvl2 = self.create_window4((10, 10), '2 time-attack', 120)
-        self.saper_time_lvl3 = self.create_window4((13, 13), '3 time-attack', 240)
-        self.saper_time_lvl4 = self.create_window4((15, 15), '4 time-attack', 300)
+        self.saper_time_lvl1 = self.create_window4((8, 8), '1 time-attack ⏱️', 60)
+        self.saper_time_lvl2 = self.create_window4((10, 10), '2 time-attack ⏱️', 120)
+        self.saper_time_lvl3 = self.create_window4((13, 13), '3 time-attack ⏱️', 240)
+        self.saper_time_lvl4 = self.create_window4((15, 15), '4 time-attack ⏱️', 300)
 
         # Добавляем окна в QStackedWidget
         self.stacked_widget.addWidget(self.menu)
