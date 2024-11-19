@@ -56,7 +56,7 @@ color: rgb(170, 0, 0)</string>
     <rect>
      <x>20</x>
      <y>110</y>
-     <width>641</width>
+     <width>711</width>
      <height>671</height>
     </rect>
    </property>
@@ -66,15 +66,15 @@ color: rgb(85, 0, 0);
 font: 15pt &quot;MS Sans Serif&quot;;</string>
    </property>
    <attribute name="horizontalHeaderDefaultSectionSize">
-    <number>206</number>
+    <number>172</number>
    </attribute>
   </widget>
   <widget class="QLabel" name="max_victory">
    <property name="geometry">
     <rect>
-     <x>680</x>
+     <x>760</x>
      <y>170</y>
-     <width>381</width>
+     <width>281</width>
      <height>41</height>
     </rect>
    </property>
@@ -96,9 +96,9 @@ background-color: rgb(193, 170, 170);</string>
   <widget class="QLabel" name="best_time">
    <property name="geometry">
     <rect>
-     <x>680</x>
+     <x>760</x>
      <y>330</y>
-     <width>391</width>
+     <width>281</width>
      <height>41</height>
     </rect>
    </property>

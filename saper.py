@@ -6,7 +6,7 @@ import copy
 
 from PyQt6 import uic
 from PyQt6.QtCore import Qt, QTimer
-from PyQt6.QtWidgets import QWidget, QPushButton, QButtonGroup, QMessageBox, QApplication
+from PyQt6.QtWidgets import QWidget, QPushButton, QButtonGroup, QMessageBox, QApplication, QInputDialog
 
 
 class Saper(QWidget):
@@ -311,7 +311,9 @@ class Saper(QWidget):
     def end_game_win(self):
         """функция выводит сообщение о том, что игрок победил"""
         self.timer.stop()
-        self.adding_victory(self.current_time)
+        name, ok_pressed = QInputDialog.getText(self, "Введите имя",
+                                                "Как тебя зовут?")
+        self.adding_victory(self.current_time, name)
         self.current_time = 0
         QMessageBox.information(self, "Поздравляем!", "Вы открыли все безопасные клетки!")
         self.game_active = False
@@ -360,7 +362,7 @@ class Saper(QWidget):
     def exit_button(self):
         return self.exit
 
-    def adding_victory(self, duration):
+    def adding_victory(self, duration, name_user):
         """Функция добавляет в БД запись о победе"""
 
         dictionary_levels = {
@@ -376,7 +378,14 @@ class Saper(QWidget):
 
         con = sqlite3.connect("db/victory_data")
         cur = con.cursor()
-        cur.execute(f"""INSERT INTO victory(lvl, duration) VALUES({dictionary_levels[self.lvl]}, {duration})""")
+        max_id = cur.execute("SELECT max(id) FROM victory").fetchone()[0]
+        if max_id == None:
+            max_id = 1
+        else:
+            max_id += 1
+        cur.execute(f"""INSERT INTO users(id, name) VALUES({max_id}, '{name_user}')""")
+        cur.execute(f"""INSERT INTO victory(lvl, duration, user) 
+                VALUES({dictionary_levels[self.lvl]}, {duration}, {max_id})""")
         con.commit()
 
     def adding_cell_image(self, coordinates, num):

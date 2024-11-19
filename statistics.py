@@ -22,14 +22,15 @@ class Statistics(QWidget):
         """Функция выводит все результаты побед в таблицу"""
         con = sqlite3.connect("db/victory_data")
         cur = con.cursor()
-        result = cur.execute("""SELECT level.name, level.size, victory.duration FROM victory 
-                JOIN level ON victory.lvl = level.id """).fetchall()
+        result = cur.execute("""SELECT users.name, level.name, level.size, victory.duration FROM victory 
+                JOIN level ON victory.lvl = level.id 
+                JOIN users ON victory.user = users.id""").fetchall()
         if result:
             # Заполяем размеры таблицы
             self.tableWidget.setRowCount(len(result))
             self.tableWidget.setColumnCount(len(result[0]))
             self.tableWidget.setHorizontalHeaderLabels(
-                ['Уровень', 'Размер поля', 'Время прохождения'])
+                ['Игрок', 'Уровень', 'Размер поля', 'Время'])
             # Заполняем таблицу полученными элементами
             for i, elem in enumerate(result):
                 for j, val in enumerate(elem):
