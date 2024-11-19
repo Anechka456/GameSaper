@@ -16,15 +16,16 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>390</x>
      <y>50</y>
-     <width>651</width>
-     <height>111</height>
+     <width>311</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 36pt &quot;Ebrima&quot;;
-color: rgb(170, 0, 0)</string>
+color: rgb(170, 0, 0);
+background-color: rgb(193, 170, 170);</string>
    </property>
    <property name="text">
     <string>Настройки</string>
@@ -109,9 +110,9 @@ background-color: rgb(157, 125, 125);</string>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>440</x>
      <y>160</y>
-     <width>571</width>
+     <width>211</width>
      <height>41</height>
     </rect>
    </property>
@@ -120,13 +121,50 @@ background-color: rgb(157, 125, 125);</string>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 22pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(170, 0, 0)</string>
+color: rgb(170, 0, 0);
+background-color: rgb(193, 170, 170);</string>
    </property>
    <property name="text">
     <string>Выберите фон</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignHCenter|Qt::AlignTop</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="picture">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>660</y>
+     <width>281</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 18pt &quot;MS Shell Dlg 2&quot;;
+color: rgb(170, 0, 0);
+background-color: rgb(157, 125, 125);</string>
+   </property>
+   <property name="text">
+    <string>Выбрать свою картинку</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="color">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>660</y>
+     <width>271</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 18pt &quot;MS Shell Dlg 2&quot;;
+color: rgb(170, 0, 0);
+background-color: rgb(157, 125, 125);</string>
+   </property>
+   <property name="text">
+    <string>Выбрать цвет текста</string>
    </property>
   </widget>
  </widget>

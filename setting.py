@@ -1,6 +1,9 @@
 from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QBrush, QPalette
-from PyQt6.QtWidgets import QWidget, QLabel
+from PyQt6.QtWidgets import QWidget, QLabel, QFileDialog, QColorDialog
+
+
+text_color = ''
 
 
 class Setting(QWidget):
@@ -38,6 +41,8 @@ class Setting(QWidget):
         self.forest.clicked.connect(self.change_background_forest)
         self.mountains.clicked.connect(self.change_background_mountains)
         self.space.clicked.connect(self.change_background_space)
+        self.picture.clicked.connect(self.change_background_you)
+        self.color.clicked.connect(self.color_changes_setting)
 
     def change_background_forest(self):
         """Функция устанавливает фон с изображением леса"""
@@ -62,6 +67,20 @@ class Setting(QWidget):
         palette = QPalette()
         palette.setBrush(QPalette.ColorRole.Window, QBrush(pixmap))
         self.main_windows.setPalette(palette)
+
+    def change_background_you(self):
+        fname = QFileDialog.getOpenFileName(
+            self, 'Выбрать картинку', '',
+            'Картинка (*.jpg);;Картинка (*.png);;Все файлы (*)')[0]
+        pixmap = QPixmap(f"{fname}")
+        pixmap = pixmap.scaled(self.size())
+        palette = QPalette()
+        palette.setBrush(QPalette.ColorRole.Window, QBrush(pixmap))
+        self.main_windows.setPalette(palette)
+
+    def color_changes_setting(self):
+        global text_color
+        text_color = QColorDialog.getColor()
 
     def exit_button(self):
         return self.exit
