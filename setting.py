@@ -1,9 +1,14 @@
 from PyQt6 import uic
-from PyQt6.QtGui import QPixmap, QBrush, QPalette
+from PyQt6.QtGui import QPixmap, QBrush, QPalette, QColor
 from PyQt6.QtWidgets import QWidget, QLabel, QFileDialog, QColorDialog
 
+from ch_c import change_color
+from menu import menu_widget
+from saper import saper_widget
+from statistics import statistics_widget
+from lvl import lvl_widget
 
-text_color = ''
+text_color = QColor(170, 0, 0)
 
 
 class Setting(QWidget):
@@ -11,6 +16,9 @@ class Setting(QWidget):
         super().__init__()
         self.main_windows = windows
         uic.loadUi("QT_files/untitled_setting.ui", self)  # Загружаем дизайн
+        setting_widget = [[self.label, self.label_2, self.exit, self.forest, self.mountains, self.space,
+                          self.picture, self.color, 22]]
+        self.widget = [menu_widget, saper_widget, statistics_widget, lvl_widget, setting_widget]
         self.initUI()
 
     def initUI(self):
@@ -81,6 +89,8 @@ class Setting(QWidget):
     def color_changes_setting(self):
         global text_color
         text_color = QColorDialog.getColor()
+        for i in self.widget:
+            change_color(i, text_color)
 
     def exit_button(self):
         return self.exit

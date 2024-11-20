@@ -3,11 +3,15 @@ import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QWidget
 
+lvl_widget = []
+
 
 class Lvl(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi("QT_files/untitled_lvl.ui", self)  # Загружаем дизайн
+        lvl_widget.append([self.label, self.exit, self.label_2, self.lvl1, self.lvl2, self.lvl3, self.lvl4,
+                          self.time_lvl1, self.time_lvl2, self.time_lvl3, self.time_lvl4, 22])
 
     def level_1(self):
         return self.lvl1

@@ -8,6 +8,8 @@ from PyQt6 import uic
 from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtWidgets import QWidget, QPushButton, QButtonGroup, QMessageBox, QApplication, QInputDialog
 
+saper_widget = []
+
 
 class Saper(QWidget):
     def __init__(self, size_row, size_col, lvl, time):
@@ -17,6 +19,8 @@ class Saper(QWidget):
         self.lvl = lvl
         self.time = time
         uic.loadUi("QT_files/untitled_field.ui", self)  # Загружаем дизайн
+        saper_widget.append([self.lvl_field, self.size_field_label, self.label_3, self.warning, self.warning2,
+                             self.exit, 14])
 
         if time == '-1':
             self.warning.setVisible(False)
@@ -311,11 +315,10 @@ class Saper(QWidget):
     def end_game_win(self):
         """функция выводит сообщение о том, что игрок победил"""
         self.timer.stop()
-        name, ok_pressed = QInputDialog.getText(self, "Введите имя",
-                                                "Как тебя зовут?")
+        name, ok_pressed = QInputDialog.getText(self, "Поздравляем! Вы открыли все безопасные клетки!",
+                                                "Введите имя")
         self.adding_victory(self.current_time, name)
         self.current_time = 0
-        QMessageBox.information(self, "Поздравляем!", "Вы открыли все безопасные клетки!")
         self.game_active = False
 
     def completion_progressbar(self):

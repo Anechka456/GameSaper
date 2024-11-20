@@ -34,10 +34,10 @@ background-color: rgb(139, 103, 103);</string>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>0</y>
+     <x>20</x>
+     <y>40</y>
      <width>651</width>
-     <height>111</height>
+     <height>51</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -45,7 +45,7 @@ background-color: rgb(139, 103, 103);</string>
 color: rgb(170, 0, 0)</string>
    </property>
    <property name="text">
-    <string>Статистика о победах</string>
+    <string>  Статистика о победах</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -66,7 +66,7 @@ color: rgb(85, 0, 0);
 font: 15pt &quot;MS Sans Serif&quot;;</string>
    </property>
    <attribute name="horizontalHeaderDefaultSectionSize">
-    <number>172</number>
+    <number>171</number>
    </attribute>
   </widget>
   <widget class="QLabel" name="max_victory">

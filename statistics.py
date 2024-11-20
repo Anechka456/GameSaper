@@ -4,11 +4,15 @@ import sqlite3
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QWidget, QTableWidgetItem
 
+statistics_widget = []
+
 
 class Statistics(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi("QT_files/untitled_data_victory.ui", self)  # Загружаем дизайн
+        statistics_widget.append([self.label, self.exit, self.max_victory, self.update_button, self.best_time,
+                                  self.tableWidget, 18])
 
         self.update_button.clicked.connect(self.run)
         self.run()
@@ -32,7 +36,7 @@ class Statistics(QWidget):
             self.tableWidget.setHorizontalHeaderLabels(
                 ['Игрок', 'Уровень', 'Размер поля', 'Время'])
             # Заполняем таблицу полученными элементами
-            for i, elem in enumerate(result):
+            for i, elem in enumerate(result[::-1]):
                 for j, val in enumerate(elem):
                     self.tableWidget.setItem(i, j, QTableWidgetItem(str(val)))
         con.close()
