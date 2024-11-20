@@ -315,7 +315,7 @@ class Saper(QWidget):
     def end_game_win(self):
         """функция выводит сообщение о том, что игрок победил"""
         self.timer.stop()
-        name, ok_pressed = QInputDialog.getText(self, "Поздравляем! Вы открыли все безопасные клетки!",
+        name = QInputDialog.getText(self, "Поздравляем! Вы открыли все безопасные клетки!",
                                                 "Введите имя")
         self.adding_victory(self.current_time, name)
         self.current_time = 0
@@ -386,7 +386,10 @@ class Saper(QWidget):
             max_id = 1
         else:
             max_id += 1
-        cur.execute(f"""INSERT INTO users(id, name) VALUES({max_id}, '{name_user}')""")
+        if not name_user[1]:
+            cur.execute(f"""INSERT INTO users(id, name) VALUES({max_id}, 'anonim')""")
+        else:
+            cur.execute(f"""INSERT INTO users(id, name) VALUES({max_id}, '{name_user[0]}')""")
         cur.execute(f"""INSERT INTO victory(lvl, duration, user) 
                 VALUES({dictionary_levels[self.lvl]}, {duration}, {max_id})""")
         con.commit()

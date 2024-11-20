@@ -45,7 +45,8 @@ font: 16pt &quot;MS Shell Dlg 2&quot;;
 background-color: rgb(139, 103, 103);</string>
    </property>
    <property name="text">
-    <string>Time attack LVL 1</string>
+    <string>Time attack LVL 1 
+⏱️💣</string>
    </property>
   </widget>
   <widget class="QPushButton" name="lvl3">
@@ -63,7 +64,8 @@ font: 16pt &quot;MS Shell Dlg 2&quot;;
 background-color: rgb(139, 103, 103);</string>
    </property>
    <property name="text">
-    <string>3 LVL</string>
+    <string>3 LVL 
+💣💣💣</string>
    </property>
   </widget>
   <widget class="QPushButton" name="lvl2">
@@ -81,7 +83,8 @@ font: 16pt &quot;MS Shell Dlg 2&quot;;
 background-color: rgb(139, 103, 103);</string>
    </property>
    <property name="text">
-    <string>2 LVL</string>
+    <string>2 LVL
+💣💣</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -110,13 +113,17 @@ color: rgb(136, 23, 9);</string>
      <height>201</height>
     </rect>
    </property>
+   <property name="accessibleDescription">
+    <string/>
+   </property>
    <property name="styleSheet">
     <string notr="true">color: rgb(93, 0, 1);
 font: 16pt &quot;MS Shell Dlg 2&quot;;
 background-color: rgb(139, 103, 103);</string>
    </property>
    <property name="text">
-    <string>Time attack LVL 2</string>
+    <string>Time attack LVL 2
+⏱️💣💣</string>
    </property>
   </widget>
   <widget class="QPushButton" name="lvl1">
@@ -137,7 +144,8 @@ font: 16pt &quot;MS Shell Dlg 2&quot;;
 background-color: rgb(139, 103, 103);</string>
    </property>
    <property name="text">
-    <string>1 LVL</string>
+    <string>1 LVL
+💣</string>
    </property>
    <property name="shortcut">
     <string/>
@@ -158,7 +166,8 @@ font: 16pt &quot;MS Shell Dlg 2&quot;;
 background-color: rgb(139, 103, 103);</string>
    </property>
    <property name="text">
-    <string>Time attack LVL 3</string>
+    <string>Time attack LVL 3
+⏱️💣💣💣</string>
    </property>
   </widget>
   <widget class="QPushButton" name="exit">
@@ -194,7 +203,8 @@ font: 16pt &quot;MS Shell Dlg 2&quot;;
 background-color: rgb(139, 103, 103);</string>
    </property>
    <property name="text">
-    <string>4 LVL</string>
+    <string>4 LVL 
+💣💣💣💣</string>
    </property>
   </widget>
   <widget class="QPushButton" name="time_lvl4">
@@ -212,7 +222,8 @@ font: 16pt &quot;MS Shell Dlg 2&quot;;
 background-color: rgb(139, 103, 103);</string>
    </property>
    <property name="text">
-    <string>Time attack LVL 4</string>
+    <string>Time attack LVL 4
+⏱️💣💣💣💣</string>
    </property>
   </widget>
  </widget>
