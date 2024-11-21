@@ -2,13 +2,10 @@ from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QBrush, QPalette, QColor
 from PyQt6.QtWidgets import QWidget, QLabel, QFileDialog, QColorDialog
 
-from ch_c import change_color
 from menu import menu_widget
 from saper import saper_widget
 from statistics import statistics_widget
 from lvl import lvl_widget
-
-text_color = QColor(170, 0, 0)
 
 
 class Setting(QWidget):
@@ -80,20 +77,29 @@ class Setting(QWidget):
         fname = QFileDialog.getOpenFileName(
             self, 'Выбрать картинку', '',
             'Картинка (*.jpg);;Картинка (*.png);;Все файлы (*)')[0]
-        pixmap = QPixmap(f"{fname}")
-        pixmap = pixmap.scaled(self.size())
-        palette = QPalette()
-        palette.setBrush(QPalette.ColorRole.Window, QBrush(pixmap))
-        self.main_windows.setPalette(palette)
+        if fname:
+            pixmap = QPixmap(f"{fname}")
+            pixmap = pixmap.scaled(self.size())
+            palette = QPalette()
+            palette.setBrush(QPalette.ColorRole.Window, QBrush(pixmap))
+            self.main_windows.setPalette(palette)
 
     def color_changes_setting(self):
-        global text_color
         text_color = QColorDialog.getColor()
         for i in self.widget:
-            change_color(i, text_color)
+            change_color_text(i, text_color)
 
     def exit_button(self):
         return self.exit
 
     def login_button(self):
         return self.setting
+
+
+def change_color_text(list_widget, color):
+    """Функция меняет цвет виджетам переданных в списке"""
+    for widgets in list_widget:
+        size_font = widgets[-1]
+        for w in widgets[:-1]:
+            style = f'font: {size_font}pt "MS Shell Dlg 2"; background-color: rgb(156, 138, 138);'
+            w.setStyleSheet(style + ' color: {}'.format(color.name()))
